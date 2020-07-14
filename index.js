@@ -57,6 +57,26 @@ app.post('/students', async (request, response) =>{
     })
 })
 
+app.delete('/students/:id', async (request, response) =>{
+    try {
+        const id = request.params.id
+
+        const studentDeleted = await Student.findByIdAndDelete(id)
+
+        response.json({
+            success:true,
+            data: {
+                student: studentDeleted
+            }
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            succes: false,
+            error: error.message
+        })
+    }
+}) 
 
 
 mongoose.connect('mongodb+srv://javisael:d12world@kodemia-node-live.av6ij.mongodb.net/school?retryWrites=true&w=majority', 
